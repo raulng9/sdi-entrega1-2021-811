@@ -3,13 +3,13 @@ package com.wallapop.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wallapop.entities.User;
 import com.wallapop.services.ConversationService;
@@ -22,48 +22,63 @@ import com.wallapop.validators.SignUpValidator;
 @Controller
 public class UserController {
 	@Autowired
-	private UserService usersService;
+	private UserService userService;
 
 	@Autowired
-	private ProductOfferService pOfferService;
+	private SecurityService securityService;
 
 	@Autowired
-	private ProductPurchaseService pPurchaseService;
+	private ProductOfferService prodOfferService;
+
+	@Autowired
+	private ProductPurchaseService prodPurchaseService;
 
 	@Autowired
 	private ConversationService conversationService;
 
 	@Autowired
 	private SignUpValidator signUpValidator;
-
-	@Autowired
-	private SecurityService securityService;
 	
+	//TODO hará falta un validador para postear nuevas ofertas de producto
+
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable, Principal principal) {
-		User user = usersService.getUserByEmail(principal.getName());
-		model.addAttribute("usersList", usersService.getUsers(pageable, user));
+	public String getListado(Model model, Principal principal) {
+		User user = userService.getUserByEmail(principal.getName());
+		model.addAttribute("usersList", userService.getUsers(user));
 		return "user/list";
 	}
-	
-	//Creación de un nuevo usuario si la validación es correcta
+
+	// Creación de un nuevo usuario si la validación es correcta
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result) {
 		signUpValidator.validate(user, result);
 		if (result.hasErrors()) {
 			return "signup";
 		}
-		usersService.addUser(user);
+		userService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
-	
-	//Envío a la página de signup
+
+	// Envío a la página de signup
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model) {
+		return "login";
+	}
+	
+	@RequestMapping("/user/delete")
+	public String delete(@RequestParam("id") String[] ids) {
+		userService.deleteUser(ids);
+		return "redirect:/user/list";
+	}
+	
+
 
 
 }

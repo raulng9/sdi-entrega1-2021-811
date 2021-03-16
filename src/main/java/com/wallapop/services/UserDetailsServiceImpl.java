@@ -19,17 +19,13 @@ import com.wallapop.repositories.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Autowired
-	private UserRepository usersRepository;
+	private UserRepository userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-		User user = usersRepository.findByEmail(mail);
-		
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		//grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ESTUDIANTE"));
-		
+		User user = userRepository.findByEmail(mail);
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();		
 		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-		
 		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
 	}
 

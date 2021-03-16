@@ -1,13 +1,11 @@
 package com.wallapop.services;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +14,26 @@ import com.wallapop.repositories.UserRepository;
 
 @Service
 public class UserService {
+	
+	//TODO añadir logger para diversos cambios en usuarios (detalles en pdf)
 
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	
+	@Autowired
+	private ProductOfferService productOfferService;
 
 	@PostConstruct
 	public void init() {
 	}
 
-	// Versión con paging directamente del lab
-	public Page<User> getUsers(Pageable pageable, User user) {
-		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		if (user.getRole().equals("ROLE_ADMIN")) {
-			users = userRepository.findAll(pageable);
-		}
+	// Paging no necesario en este caso
+	public List<User> getUsers(User user) {
+		List<User> users = new ArrayList<User>();
+		userRepository.findAll().forEach(users::add);
 		return users;
 	}
 
@@ -41,20 +41,27 @@ public class UserService {
 		return userRepository.findById(id).get();
 	}
 
-	// Añadimos un nuevo usuario al repo, con crédito estándar 100 y rol de cliente
-	// normal
+	// Añadimos un nuevo usuario al repo, los detalles de rol y crédito en el constructor de la entidad
+	// Cifrando como en el lab
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
+	// Equivalente a buscar por DNI, es la otra clave aparte del id para identificar
 	public User getUserByEmail(String mail) {
 		return userRepository.findByEmail(mail);
 	}
 
-	public void deleteUser(Long id) {
-		userRepository.deleteById(id);
+	// Tenemos que permitir el borrado simultáneo de varios usuarios
+	public void deleteUser(String[] userIds) {
+		for (String id : userIds) {
+			User userToDelete = getUser(Long.parseLong(id));
+			userRepository.delete(userToDelete);
+		}
+
+		// TODO incluir borrado de todas las ofertas asociadas al usuario
 	}
 
-	//Editar usuario en principio no
+	// Editar usuario no hace falta incluirlo en este caso
 }

@@ -1,5 +1,9 @@
 package com.wallapop.repositories;
 
-public interface ProductOfferRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import com.wallapop.entities.ProductOffer;
+
+public interface ProductOfferRepository extends CrudRepository<ProductOffer,Long>{
 
 }
