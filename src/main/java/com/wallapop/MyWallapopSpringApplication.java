@@ -1,4 +1,4 @@
-package com.mywallapop;
+package com.wallapop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,4 @@ public class MyWallapopSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MyWallapopSpringApplication.class, args);
 	}
-
 }
