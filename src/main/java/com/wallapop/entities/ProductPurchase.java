@@ -3,6 +3,9 @@ package com.wallapop.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ProductPurchase {
@@ -10,14 +13,18 @@ public class ProductPurchase {
 	@GeneratedValue
 	private Long id;
 
+	@OneToOne()
+	@JoinColumn(name = "productoffer_id")
 	private ProductOffer offerBought;
 
-	private User buyerUser;
+	@ManyToOne()
+	@JoinColumn(name = "buyer_id")
+	private User buyer;
 
-	public ProductPurchase(ProductOffer offerBought, User buyerUser) {
+	public ProductPurchase(ProductOffer offerBought, User buyer) {
 		super();
 		this.offerBought = offerBought;
-		this.buyerUser = buyerUser;
+		this.buyer = buyer;
 	}
 
 	public ProductPurchase() {
@@ -40,11 +47,11 @@ public class ProductPurchase {
 	}
 
 	public User getBuyer() {
-		return buyerUser;
+		return buyer;
 	}
 
-	public void setBuyer(User buyerUser) {
-		this.buyerUser = buyerUser;
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
 	}
 
 }

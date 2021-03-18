@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head"></head>
+<nav th:replace="fragments/nav"></nav>
+<body>
+	<div class="container">
+		<h2 class="text-center">Login en MyWallapop:</h2>
+
+		<div th:if="${param.error}">
+			<div class="alert fixed-top alert-danger" id="alert">Errores de
+				validación encontrados</div>
+		</div>
+		<div class="container">
+			<form class="form-horizontal justify-content-center" method="post"
+				action="/login">
+				<div class="form-group">
+					<label for="m"> Email</label>
+					<div>
+						<input type="email" id="email" class="form-control"
+							name="username" required="true">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="o">Contraseña</label>
+					<div>
+						<input id="password" type="password" class="form-control"
+							name="password" required="true">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div>
+						<button type="submit" id="submit" class="btn btn-primary">Login</button>
+					</div>
+				</div>
+				<input type="hidden" name="${_csrf.parameterName}"
+					value="${_csrf.token}">
+			</form>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer"></footer>
+
+</body>
+
+</html>

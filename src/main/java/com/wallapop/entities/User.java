@@ -1,37 +1,49 @@
 package com.wallapop.entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
 public class User {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	private String name;
 	private String lastName;
 	private String role;
 	private double saldo;
-	
+
 	private String password;
-	@Transient //No almacenada en la tabla
+	@Transient // No almacenada en la tabla
 	private String passwordConfirm;
-	
+
+	// Cada usuario puede tener varias ofertas pero no viceversa
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<ProductOffer> offers = new HashSet<ProductOffer>();
+
+	// Cada compra pertenece a un único usuario, pero un usuario puede realizar más
+	// de una compra
+	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
+	private Set<ProductPurchase> purchased = new HashSet<ProductPurchase>();
+
 	public User(String email, String name, String lastName) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.lastName = lastName;
-		//Aquí??
+		// Aquí??
 		this.saldo = 100;
 	}
-	
+
 	public User() {
-		
+
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -87,15 +99,15 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
-	
+
 	public String getFullName() {
 		return this.name + " " + this.lastName;
 	}
-	
+
 	public String getRole() {
 		return this.role;
 	}
-	
+
 	public void setRole(String role) {
 		this.role = role;
 	}

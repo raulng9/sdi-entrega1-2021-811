@@ -13,7 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class ProductOffer {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -23,21 +23,17 @@ public class ProductOffer {
 	private Date date;
 	private double price;
 	private boolean isSold;
-	
 
+	// Cada oferta está asignada a un único usuario, pero cada usuario puede ser
+	// dueño de varias ofertas
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	//Cada oferta tiene una única compra asociada y viceversa
+
+	// Cada oferta tiene una única compra asociada y viceversa
 	@OneToOne()
 	@JoinColumn(name = "purchase_id")
 	private ProductPurchase purchase;
-	
-	
-	public ProductOffer(){
-	
-	}
 
 	public ProductOffer(String title, String description, Date date, double price, User user) {
 		super();
@@ -48,7 +44,11 @@ public class ProductOffer {
 		this.user = user;
 
 	}
-	
+
+	public ProductOffer() {
+
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -96,7 +96,7 @@ public class ProductOffer {
 	public void setSold(boolean sold) {
 		this.isSold = sold;
 	}
-	
+
 	public ProductPurchase getPurchase() {
 		return purchase;
 	}
@@ -104,7 +104,7 @@ public class ProductOffer {
 	public void setPurchase(ProductPurchase purchase) {
 		this.purchase = purchase;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
