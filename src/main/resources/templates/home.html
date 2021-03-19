@@ -3,7 +3,92 @@
 <head th:replace="fragments/head"></head>
 <nav th:replace="fragments/nav"></nav>
 <body>
-	<h2>Vista de home</h2>
-		<footer th:replace="fragments/footer"></footer>
+	<h2 th:text="#{welcome.message}">Zona privada</h2>
+	<div class="container">
+		<div class="table table-responsive"
+			sec:authorize="hasRole('ROLE_CLIENT')">
+			<table class="table table-hover" id="userData">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Email</th>
+						<th>Saldo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${completeName}"></td>
+						<td sec:authentication="principal.username"></td>
+						<td th:text="${saldo}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<hr>
+			<h3>Ofertas propias:</h3>
+			<hr>
+			<div class="table table-responsive">
+				<table class="table table-hover" id="createdOffers">
+					<thead>
+						<tr>
+							<th>Producto</th>
+							<th>Fecha</th>
+							<th>Descripción</th>
+							<th>Precio</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="offer : ${offerList}">
+							<td th:text="${offer.title}"></td>
+							<td th:text="${offer.date}"></td>
+							<td th:text="${offer.description}"></td>
+							<td th:text="${offer.price}"></td>
+
+							<td>
+								<div th:if="${offer.sold}">
+									<p>Producto vendido</p>
+								</div>
+							</td>
+
+							<td><a th:href="${'/offer/delete/' + offer.id}">Eliminar
+									oferta</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<hr>
+			<hr>
+			<h3>Ofertas vendidas</h3>
+			<hr>
+			<div class="table table-responsive">
+				<table class="table table-hover" id="purchasedOffers">
+					<thead>
+						<tr>
+							<th>Título</th>
+							<th>Descripción</th>
+							<th>Vendedor</th>
+							<th>Precio</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="purchase : ${purchasedList}">
+							<td th:text="${purchase.getTitle()}"></td>
+							<td th:text="${purchase.getDescription()}"></td>
+							<td th:text="${purchase.getBuyerInfo()}"></td>
+							<td th:text="${purchase.getPrice()}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="container" style="text-align: center"
+			sec:authorize="hasRole('ROLE_ADMIN')">
+			<span th:text="#{user.authenticated}"></span> <span
+				th:text="${completeName}"></span>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer"></footer>
+
 </body>
+
 </html>

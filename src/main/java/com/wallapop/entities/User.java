@@ -111,5 +111,14 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	public Set<ProductOffer> getOffers() {
+		return this.offers;
+	}
+
+	public void setOffers(Set<ProductOffer> offers) {
+		this.offers = offers;
+	}
+
 
 }

@@ -21,7 +21,7 @@ public class ProductPurchase {
 	@JoinColumn(name = "buyer_id")
 	private User buyer;
 
-	public ProductPurchase(ProductOffer offerBought, User buyer) {
+	public ProductPurchase(User buyer, ProductOffer offerBought) {
 		super();
 		this.offerBought = offerBought;
 		this.buyer = buyer;
@@ -52,6 +52,10 @@ public class ProductPurchase {
 
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
+	}
+	
+	public String getBuyerInfo() {
+		return buyer.getFullName();
 	}
 
 }

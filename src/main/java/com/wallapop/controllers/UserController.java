@@ -3,6 +3,8 @@ package com.wallapop.controllers;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -81,6 +83,13 @@ public class UserController {
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.getUserByEmail(email);
+		model.addAttribute("saldo", user.getSaldo());
+		model.addAttribute("offerList", prodOfferService.getOffersByUser(user));
+		model.addAttribute("purchasedList",prodPurchaseService.getOffersPurchasedByUser(user));
+		model.addAttribute("completeName", user.getFullName());
 		return "home";
 	}
 	

@@ -37,20 +37,21 @@ public class ProductOfferController {
 	public String setOffer(Model model, @Validated ProductOffer prodOffer, BindingResult result, @RequestParam(value = "id", required=false) String id) {
 		addProdOfferValidator.validate(prodOffer, result);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User activeUser = userService.getUserByEmail(auth.getName());
+		User user = userService.getUserByEmail(auth.getName());
 		if (result.hasErrors()) {
-			return "offer/add";
+			return "productoffer/add";
 		}
-		//TODO método para añadir oferta a la repo y enlazar con el usuario dueño de ella
+		//TODO método para añadir oferta a la repo y enlazar con el usuario dueño
 		//Después de añadir la oferta volver a la vista principal
+		prodOfferService.addOffer(prodOffer,user);
 		return "redirect:/home";
 	}
 	
-	//La request GET redirecciona a POST como siempre
+	//La request GET redirecciona a POST como en el lab
 	@RequestMapping(value = "/offer/add")
 	public String getOffer(Model model) {
 		model.addAttribute("offer", new ProductOffer());
-		return "offer/add";
+		return "productoffer/add";
 	}
 	
 	

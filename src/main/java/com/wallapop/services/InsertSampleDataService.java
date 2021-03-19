@@ -1,10 +1,13 @@
 package com.wallapop.services;
 
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wallapop.entities.ProductOffer;
 import com.wallapop.entities.User;
 import com.wallapop.repositories.ProductOfferRepository;
 import com.wallapop.repositories.ProductPurchaseRepository;
@@ -33,6 +36,8 @@ public class InsertSampleDataService {
 	
 	@PostConstruct
 	public void init(){
+		
+		//USUARIOS
 
 		User u1 = new User("testmail@mail.com", "Raúl", "Test1 Test1");
 		u1.setRole("ROLE_CLIENT");
@@ -75,8 +80,31 @@ public class InsertSampleDataService {
 		adminUser.setPassword("123456");
 		
 		userService.addUser(adminUser);
+		
+		
+		
+		//OFERTAS
+		ProductOffer offer1 = new ProductOffer("IPhone", "No funciona", new Date(System.currentTimeMillis()), 8.0, u1);
+		ProductOffer offer2 = new ProductOffer("Camiseta", "Camiseta de Dior", new Date(System.currentTimeMillis()), 50.0, u2);
+		ProductOffer offer3 = new ProductOffer("Lavavajillas", "Fagor", new Date(System.currentTimeMillis()), 2.80, u3);
+		ProductOffer offer4 = (new ProductOffer("Coche de jueguete", "playmobil", new Date(System.currentTimeMillis()), 42.42, u4));
+		ProductOffer offer5 = (new ProductOffer("Libro", "Harry Potter y el cáliz de fuego", new Date(System.currentTimeMillis()), 250.99, u1));
+		ProductOffer offer6 = (new ProductOffer("Botella", "Ecológica", new Date(System.currentTimeMillis()), 70.50, u1));
+		
+		prodOfferService.addOffer(offer1, u1);
+		prodOfferService.addOffer(offer2, u2);
+		prodOfferService.addOffer(offer3, u3);
+		prodOfferService.addOffer(offer4, u4);
+		prodOfferService.addOffer(offer5, u1);
+		prodOfferService.addOffer(offer6, u1);
+
 
 	}
+	
+	
+	
+	//TODO mirar constructores de Date
+	
 
 
 }
