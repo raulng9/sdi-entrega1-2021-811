@@ -4,14 +4,14 @@
 <nav th:replace="fragments/nav"></nav>
 <body>
 		<div class="container">
-			<h2 th:text="#{signup.message}"></h2>
+			<h2>Registrarse en MyWallapop</h2>
 			<form class="form-group" method="post" action="/signup" th:object="${user}">
 				<div class="form-group">
 					<label for="email"
-						th:text="#{signup.email}"></label>
+						>Email</label>
 					<div>
 						<input type="email" class="form-control" name="email" id="email"
-							th:placeholder="#{email.placeholder}" required="true"> <span
+							required="true"> <span
 							class="text-danger" 
 							th:if="${#fields.hasErrors('email')}"
 							th:errors="*{email}"></span>
@@ -19,7 +19,7 @@
 				</div>
 				<div class="form-group">
 					<label for="name"
-						th:text="#{signup.name}"></label>
+						>Nombre:</label>
 					<div>
 						<input type="text" class="form-control" name="name" id="name"
 							th:placeholder="#{name.placeholder}" required="true"> <span
@@ -30,7 +30,7 @@
 				</div>
 				<div class="form-group">
 					<label for="lastName"
-						th:text="#{signup.lastName}"></label>
+						>Apellidos:</label>
 					<div>
 						<input type="text" class="form-control" name="lastName" id="lastName"
 							th:placeholder="#{lastName.placeholder}" required="true">
@@ -41,7 +41,7 @@
 				</div>
 				<div class="form-group">
 					<label for="password"
-						th:text="#{signup.password}"></label>
+						>Contraseña:</label>
 					<div>
 						<input type="password" class="form-control" name="password" id="password"
 							th:placeholder="#{password.placeholder}" required="true"> <span
@@ -52,7 +52,7 @@
 				</div>
 				<div class="form-group">
 					<label  for="passwordConfirm"
-						th:text="#{signup.passwordConfirm}"></label>
+						>Repetir contraseña:</label>
 					<div>
 						<input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"
 							th:placeholder="#{passwordConfirm.placeholder}" required="true"> <span
@@ -64,13 +64,12 @@
 				<div class="form-group">
 					<div>
 						<button type="submit" class="btn btn-primary" id="submit"
-							th:text="#{signup.send}"></button>
+							>Registrarse</button>
 					</div>
 				</div>
 			</form>
 		</div>
 		<footer th:replace="fragments/footer"></footer>
-	
 </body>
 
 </html>

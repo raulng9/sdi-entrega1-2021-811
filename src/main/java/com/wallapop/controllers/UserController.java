@@ -59,6 +59,7 @@ public class UserController {
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
+	
 
 	// Envío a la página de signup
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -76,6 +77,11 @@ public class UserController {
 	public String delete(@RequestParam("id") String[] ids) {
 		userService.deleteUser(ids);
 		return "redirect:/user/list";
+	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(Model model) {
+		return "home";
 	}
 	
 
