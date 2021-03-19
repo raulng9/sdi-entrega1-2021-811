@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.wallapop.entities.ProductOffer;
@@ -18,8 +20,9 @@ public class ProductOfferService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	//TODO añadir id a la oferta? posible ampliación con oferta destacada (extra, no obligatorio)
+
+	// TODO añadir id a la oferta? posible ampliación con oferta destacada (extra,
+	// no obligatorio)
 	public void addOffer(ProductOffer offerToAdd, User user) {
 		offerToAdd.setUser(user);
 		offerToAdd.setDate(new Date(new java.util.Date().getTime()));
@@ -28,15 +31,39 @@ public class ProductOfferService {
 		userRepository.save(user);
 
 	}
-	
-	//El método básico
+
+	// El método básico
 	public ProductOffer getOffer(Long id) {
 		return prodOfferRepository.findById(id).get();
 	}
-	
-	
 
 	public List<ProductOffer> getOffersByUser(User user) {
 		return prodOfferRepository.findOffersByUser(user);
 	}
+
+	// Si borramos una oferta tenemos que eliminar su relación con el su vendedor y,
+	// en caso de que haya un
+	// comprador, también la relación con este
+	public void deleteOffer(Long id) {
+		ProductOffer offerToDelete = getOffer(id);
+		// If there's a buyer we have to delete the offer from the user's list of
+		// purchases
+		if (offerToDelete.getPurchase() != null) {
+			offerToDelete.getPurchase().setOffer(null);
+			offerToDelete.getPurchase().setBuyer(null);
+			offerToDelete.getUser().getPurchased().remove(offerToDelete.getPurchase());
+
+		}
+		offerToDelete.getUser().getOffers().remove(offerToDelete);
+		offerToDelete.setUser(null);
+		offerToDelete.setPurchase(null);
+		prodOfferRepository.delete(offerToDelete);
+
+	}
+	
+	public Page<ProductOffer> getNotBoughtOffers(Pageable pageable, User user){
+		Page<ProductOffer> notBoughtOffers = prodOfferRepository.searchNotBoughtOffers(pageable, user);
+		return notBoughtOffers;
+	}
+
 }

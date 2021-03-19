@@ -10,6 +10,6 @@ import com.wallapop.entities.User;
 
 public interface ProductPurchaseRepository extends CrudRepository<ProductPurchase,Long>{
 	
-	@Query("SELECT r FROM ProductPurchase r WHERE (r.offer.sold = true and r.buyer = ?1) ORDER BY r.id ASC")
+	@Query("SELECT r FROM ProductPurchase r WHERE (r.offerBought.isSold = true and r.buyer = ?1) ORDER BY r.id ASC")
 	List<ProductPurchase> findPurchasesByUser(User user);
 }

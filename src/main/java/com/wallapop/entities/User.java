@@ -119,6 +119,14 @@ public class User {
 	public void setOffers(Set<ProductOffer> offers) {
 		this.offers = offers;
 	}
+	
+	public Set<ProductPurchase> getPurchased() {
+		return purchased;
+	}
+
+	public void setPurchased(Set<ProductPurchase> purchased) {
+		this.purchased = purchased;
+	}
 
 
 }

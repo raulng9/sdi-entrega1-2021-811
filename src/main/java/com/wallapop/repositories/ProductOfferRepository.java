@@ -2,6 +2,8 @@ package com.wallapop.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,5 +16,10 @@ public interface ProductOfferRepository extends CrudRepository<ProductOffer,Long
 	
 	@Query("SELECT r FROM ProductOffer r WHERE (r.user = ?1) ORDER BY r.id ASC")
 	List<ProductOffer> findOffersByUser(User user);
+	
+	
+	@Query("SELECT r FROM ProductOffer r WHERE (r.user <> ?1) ORDER BY r.id ASC")
+	Page<ProductOffer> searchNotBoughtOffers(Pageable pageable, User user);
+
 
 }
