@@ -4,8 +4,8 @@
 <body>
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h1>Bienvenido a MyWallapop</h1>
-		<h3>Entra en tu perfil o regístrate para empezar a vender y comprar productos.</h3>
+		<h1 th:text="#{welcome.index}"></h1>
+		<h3 th:text="#{welcome.index.description}"></h3>
 	</div>
 	<footer th:replace="fragments/footer"></footer>
 </body>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.wallapop.entities.ProductOffer;
 import com.wallapop.entities.User;
 import com.wallapop.repositories.UserRepository;
 
@@ -24,7 +25,7 @@ public class UserService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Autowired
-	private ProductOfferService productOfferService;
+	private ProductOfferService prodOfferService;
 
 	@PostConstruct
 	public void init() {
@@ -62,10 +63,27 @@ public class UserService {
 	public void deleteUser(String[] userIds) {
 		for (String id : userIds) {
 			User userToDelete = getUser(Long.parseLong(id));
+			//No podemos permitir el borrado de administradores
+			if(userToDelete.getRole().equals("ROLE_ADMIN")) {
+				continue;
+			}
+			System.out.println(userToDelete.getRole());
+			for (ProductOffer offer : userToDelete.getOffers()) {
+				ProductOffer offerToDelete = prodOfferService.getOffer(offer.getId());
+				if (offerToDelete.getPurchase() != null) {
+
+					offerToDelete.getPurchase().setOffer(null);
+					offerToDelete.getUser().getPurchased().remove(offerToDelete.getPurchase());
+
+				}
+				offerToDelete.setUser(null);
+				offerToDelete.setPurchase(null);
+			}
 			userRepository.delete(userToDelete);
 		}
 
 		// TODO incluir borrado de todas las ofertas asociadas al usuario
+
 	}
 
 	// Editar usuario no hace falta incluirlo en este caso

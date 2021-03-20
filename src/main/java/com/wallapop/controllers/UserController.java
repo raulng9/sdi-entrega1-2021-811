@@ -90,5 +90,4 @@ public class UserController {
 		model.addAttribute("completeName", user.getFullName());
 		return "home";
 	}
-
 }
