@@ -21,7 +21,6 @@ public class CustomConfiguration implements WebMvcConfigurer{
 
 	@Value("${spring.data.web.pageable.default-page-size}") 
 	public int size;
-	
 	@Value("${spring.data.web.pageable.page-parameter}") 
 	public int page;
 	

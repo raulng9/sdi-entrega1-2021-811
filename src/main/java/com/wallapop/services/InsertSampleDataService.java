@@ -77,7 +77,7 @@ public class InsertSampleDataService {
 
 		User adminUser = new User("admin@mail.com", "Admin", "Admin1 Admin2");
 		adminUser.setRole("ROLE_ADMIN");
-		adminUser.setPassword("123456");
+		adminUser.setPassword("admin");
 
 		userService.addUser(adminUser);
 
@@ -95,7 +95,6 @@ public class InsertSampleDataService {
 		ProductOffer offer6 = (new ProductOffer("Estantería para libros", "Madera de roble",
 				new Date(System.currentTimeMillis()), 70.50, u1));
 
-		// OFERTAS
 		ProductOffer offer7 = new ProductOffer("Funda iPad", "Transparente con esquinas reforzadas",
 				new Date(System.currentTimeMillis()), 29.0, u5);
 		ProductOffer offer8 = new ProductOffer("Camiseta fútbol", "Reading F.C.",
@@ -108,6 +107,20 @@ public class InsertSampleDataService {
 				new Date(System.currentTimeMillis()), 120.99, u4));
 		ProductOffer offer12 = (new ProductOffer("Casco ciclismo", "Marca Bell, seminuevo",
 				new Date(System.currentTimeMillis()), 39.99, u5));
+		
+		ProductOffer offer13 = new ProductOffer("Portátil MacBookPro", "Modelo late 2015, como nuevo",
+				new Date(System.currentTimeMillis()), 600.0, u6);
+		ProductOffer offer14 = new ProductOffer("Disco duro portátil", "Toshiba 1TB HDD, con funda incluida",
+				new Date(System.currentTimeMillis()), 62.0, u3);
+		ProductOffer offer15 = new ProductOffer("Balón de fútbol", "Adidas Jabulani Mundial 2010", new Date(System.currentTimeMillis()),
+				12.50, u2);
+		ProductOffer offer16 = (new ProductOffer("Libro: La broma infinita", "Autor: David Foster Wallace, marcas de uso",
+				new Date(System.currentTimeMillis()), 14.00, u4));
+		ProductOffer offer17 = (new ProductOffer("Objetivo Nikkon 50mm F2.8", "Como nuevo",
+				new Date(System.currentTimeMillis()), 320.00, u5));
+		ProductOffer offer18 = (new ProductOffer("Altavoz inalámbrico Sony", "Sin casi uso",
+				new Date(System.currentTimeMillis()), 89.99, u6));
+
 
 		prodOfferService.addOffer(offer1, u1);
 		prodOfferService.addOffer(offer2, u2);
@@ -122,6 +135,14 @@ public class InsertSampleDataService {
 		prodOfferService.addOffer(offer10, u3);
 		prodOfferService.addOffer(offer11, u3);
 		prodOfferService.addOffer(offer12, u3);
+		
+
+		prodOfferService.addOffer(offer13, u6);
+		prodOfferService.addOffer(offer14, u3);
+		prodOfferService.addOffer(offer15, u2);
+		prodOfferService.addOffer(offer16, u4);
+		prodOfferService.addOffer(offer17, u5);
+		prodOfferService.addOffer(offer18, u6);
 		
 
 	}

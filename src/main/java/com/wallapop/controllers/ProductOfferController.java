@@ -98,8 +98,6 @@ public class ProductOfferController {
 
 	}
 	
-	
-
 	@RequestMapping("/market/update")
 	public String updateMarketAfterBuy(Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -107,7 +105,16 @@ public class ProductOfferController {
 		model.addAttribute("offerList", prodOfferService.getNotBoughtOffers(pageable, activeUser));
 		model.addAttribute("user", activeUser);
 		return "market :: tableOffers";
-
 	}
+	
+	
+	@RequestMapping("/market/updateuser")
+	public String updateUserInfoAfterBuy(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User activeUser = userService.getUserByEmail(auth.getName());
+		model.addAttribute("user", activeUser);
+		return "market :: userData";
+	}
+
 
 }

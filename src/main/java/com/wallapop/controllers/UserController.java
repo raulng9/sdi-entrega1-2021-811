@@ -40,8 +40,8 @@ public class UserController {
 
 	@Autowired
 	private SignUpValidator signUpValidator;
-	
-	//TODO hará falta un validador para postear nuevas ofertas de producto
+
+	// TODO hará falta un validador para postear nuevas ofertas de producto
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Principal principal) {
@@ -58,30 +58,27 @@ public class UserController {
 			return "signup";
 		}
 		userService.addUser(user);
-		//TODO error en GrantAuth aquí
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}
-	
 
-	// Envío a la página de signup
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
 	}
-	
+
 	@RequestMapping("/user/delete")
 	public String delete(@RequestParam("id") String[] ids) {
 		userService.deleteUser(ids);
 		return "redirect:/user/list";
 	}
-	
+
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,12 +86,9 @@ public class UserController {
 		User user = userService.getUserByEmail(email);
 		model.addAttribute("saldo", user.getSaldo());
 		model.addAttribute("offerList", prodOfferService.getOffersByUser(user));
-		model.addAttribute("purchasedList",prodPurchaseService.getOffersPurchasedByUser(user));
+		model.addAttribute("purchasedList", prodPurchaseService.getOffersPurchasedByUser(user));
 		model.addAttribute("completeName", user.getFullName());
 		return "home";
 	}
-	
-
-
 
 }
