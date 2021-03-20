@@ -3,73 +3,68 @@
 <head th:replace="fragments/head"></head>
 <nav th:replace="fragments/nav"></nav>
 <body>
-		<div class="container">
-			<h2>Registrarse en MyWallapop</h2>
-			<form class="form-group" method="post" action="/signup" th:object="${user}">
-				<div class="form-group">
-					<label for="email"
-						>Email</label>
-					<div>
-						<input type="email" class="form-control" name="email" id="email"
-							required="true"> <span
-							class="text-danger" 
-							th:if="${#fields.hasErrors('email')}"
-							th:errors="*{email}"></span>
-					</div>
+	<div class="container">
+		<h2 th:text="#{signup.message}">Registrarse en MyWallapop</h2>
+		<hr>
+		<br>
+		<form class="form-group" method="post" action="/signup"
+			th:object="${user}">
+			<div class="form-group">
+				<label for="email" th:text="#{signup.email}">Email</label>
+				<div>
+					<input type="email" class="form-control" name="email" id="email"
+						required="true" th:placeholder="#{email.placeholder}"> <span
+						class="text-danger" th:if="${#fields.hasErrors('email')}"
+						th:errors="*{email}"></span>
 				</div>
-				<div class="form-group">
-					<label for="name"
-						>Nombre:</label>
-					<div>
-						<input type="text" class="form-control" name="name" id="name"
-							th:placeholder="#{name.placeholder}" required="true"> <span
-							class="text-danger"
-							th:if="${#fields.hasErrors('name')}"
-							th:errors="*{name}"></span>
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="name" th:text="#{signup.name}">Nombre:</label>
+				<div>
+					<input type="text" class="form-control" name="name" id="name"
+						th:placeholder="#{name.placeholder}" required="true"> <span
+						class="text-danger" th:if="${#fields.hasErrors('name')}"
+						th:errors="*{name}"></span>
 				</div>
-				<div class="form-group">
-					<label for="lastName"
-						>Apellidos:</label>
-					<div>
-						<input type="text" class="form-control" name="lastName" id="lastName"
-							th:placeholder="#{lastName.placeholder}" required="true">
-						<span class="text-danger"
-							th:if="${#fields.hasErrors('lastName')}"
-							th:errors="*{lastName}"></span>
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="lastName" th:text="#{signup.lastName}">Apellidos:</label>
+				<div>
+					<input type="text" class="form-control" name="lastName"
+						id="lastName" th:placeholder="#{lastName.placeholder}"
+						required="true"> <span class="text-danger"
+						th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
 				</div>
-				<div class="form-group">
-					<label for="password"
-						>Contraseña:</label>
-					<div>
-						<input type="password" class="form-control" name="password" id="password"
-							th:placeholder="#{password.placeholder}" required="true"> <span
-							class="text-danger"
-							th:if="${#fields.hasErrors('password')}"
-							th:errors="*{password}"></span>
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="password" th:text="#{signup.password}">Contraseña:</label>
+				<div>
+					<input type="password" class="form-control" name="password"
+						id="password" th:placeholder="#{password.placeholder}"
+						required="true"> <span class="text-danger"
+						th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 				</div>
-				<div class="form-group">
-					<label  for="passwordConfirm"
-						>Repetir contraseña:</label>
-					<div>
-						<input type="password" class="form-control" name="passwordConfirm" id="passwordConfirm"
-							th:placeholder="#{passwordConfirm.placeholder}" required="true"> <span
-							class="text-danger"
-							th:if="${#fields.hasErrors('passwordConfirm')}"
-							th:errors="*{passwordConfirm}"></span>
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="passwordConfirm" th:text="#{signup.passwordConfirm}">Repetir
+					contraseña:</label>
+				<div>
+					<input type="password" class="form-control" name="passwordConfirm"
+						id="passwordConfirm"
+						th:placeholder="#{passwordConfirm.placeholder}" required="true">
+					<span class="text-danger"
+						th:if="${#fields.hasErrors('passwordConfirm')}"
+						th:errors="*{passwordConfirm}"></span>
 				</div>
-				<div class="form-group">
-					<div>
-						<button type="submit" class="btn btn-primary" id="submit"
-							>Registrarse</button>
-					</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<button type="submit" class="btn btn-primary" id="submit">Registrarse</button>
 				</div>
-			</form>
-		</div>
-		<footer th:replace="fragments/footer"></footer>
+			</div>
+		</form>
+	</div>
+	<footer th:replace="fragments/footer"></footer>
 </body>
 
 </html>

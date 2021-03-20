@@ -28,14 +28,6 @@ public class ProductPurchaseService {
 		prodPurchaseRepository.save(purchaseToAdd);
 	}
 
-	public void purchaseProductOffer(User buyer, ProductOffer offerToBuy) {
-		ProductPurchase purchaseToDo = new ProductPurchase(buyer, offerToBuy);
-
-		// TODO bajar saldo, marcar la oferta como comprada, añadir a la lista de
-		// ofertas compradas del usuario
-		// y guardar todo otra vez en los repos correspondientes
-	}
-
 	public List<ProductPurchase> getOffersPurchasedByUser(User buyer) {
 		return prodPurchaseRepository.findPurchasesByUser(buyer);
 	}

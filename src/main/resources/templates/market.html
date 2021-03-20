@@ -5,16 +5,16 @@
 <body>
 	<div class="container">
 		<form class="form-horizontal justify-content-center" action="/market">
-			<h2>Mercado de productos</h2>
+			<h2 th:text="#{market.title}">Mercado de productos</h2>
 			<br> <br>
-			<h4>Tus datos:</h4>
+			<h4 th:text="#{market.data}">Tus datos:</h4>
 			<table class="table table-hover" id="userData"
 				th:fragment="userData">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Email</th>
-						<th>Saldo actual:</th>
+						<th th:text="#{market.username}">Nombre</th>
+						<th th:text="#{market.email}">Email</th>
+						<th th:text="#{market.usercredits}">Saldo actual:</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,20 +27,20 @@
 			</table>
 			<br> <br> <br>
 			<div class="form-group">
-				<label for="textToSearch">Buscar ofertas:</label> <input
+				<label for="textToSearch" th:text="#{market.searchtitle}">Buscar ofertas:</label> <input
 					name="textToSearch" type="text" class="form-control">
 			</div>
-			<button type="submit" class="btn btn-primary" id="btnSearch">Buscar</button>
+			<button type="submit" class="btn btn-primary" id="btnSearch" th:text="#{market.search}">Buscar</button>
 		</form>
 	</div>
 	<div class="container white" style="text-align: center">
 		<hr>
 		<div class="fixed-top">
-			<div class="alert fixed-top alert-danger collapse" id="alert">No
+			<div class="alert fixed-top alert-danger collapse" id="alert" th:text="#{market.pooruser}">No
 				tienes saldo suficiente para comprar el producto</div>
 		</div>
 
-		<h4>Oferta</h4>
+		<h4 th:text="#{market.offer}">Oferta</h4>
 		<hr>
 		<div class="table table-responsive"
 			sec:authorize="hasRole('ROLE_CLIENT')">
@@ -48,10 +48,10 @@
 				id="tableOffers">
 				<thead>
 					<tr>
-						<th>Título</th>
-						<th>Fecha de puesta en venta</th>
-						<th>Descripción</th>
-						<th>Precio</th>
+						<th th:text="#{market.product}">Título</th>
+						<th th:text="#{market.date}">Fecha de puesta en venta</th>
+						<th th:text="#{market.productdescription}">Descripción</th>
+						<th th:text="#{market.price}">Precio</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -64,7 +64,7 @@
 						<td>
 							<div th:unless="${offer.sold}">
 								<button name="buy" class="btn btn-secondary"
-									th:id="${'buyButton' + offer.id}">Comprar</button>
+									th:id="${'buyButton' + offer.id}" th:text="#{market.buy}">Comprar</button>
 								<script th:inline="javascript">
 								 /*<![CDATA[*/
 								 $( "#buyButton[[${offer.id}]]" ).click(function() {
@@ -88,7 +88,7 @@
 								 </script>
 							</div>
 							<div th:if="${offer.isSold}">
-								<p>Producto vendido</p>
+								<p th:text="#{market.sold}">Producto vendido</p>
 							</div>
 						</td>
 

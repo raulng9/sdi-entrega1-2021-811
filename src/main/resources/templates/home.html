@@ -4,15 +4,15 @@
 <nav th:replace="fragments/nav"></nav>
 <body>
 	<div class="container justify-content-center">
-		<h2>Área privada</h2>
+		<h2 th:text="#{private.title}">Área privada</h2>
 		<div class="table table-responsive"
 			sec:authorize="hasRole('ROLE_CLIENT')">
 			<table class="table table-hover" id="userData">
 				<thead>
 					<tr>
-						<th>Nombre</th>
-						<th>Email</th>
-						<th>Saldo</th>
+						<th th:text="#{private.name}">Nombre</th>
+						<th th:text="#{private.email}">Email</th>
+						<th th:text="#{private.credits}">Saldo</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -24,16 +24,16 @@
 				</tbody>
 			</table>
 			<hr>
-			<h3>Ofertas propias:</h3>
+			<h3 th:text="#{private.ownoffers}">Ofertas propias:</h3>
 			<hr>
 			<div class="table table-responsive">
 				<table class="table table-hover" id="createdOffers">
 					<thead>
 						<tr>
-							<th>Producto</th>
-							<th>Fecha</th>
-							<th>Descripción</th>
-							<th>Precio</th>
+							<th th:text="#{private.product}">Producto</th>
+							<th th:text="#{private.date}">Fecha</th>
+							<th th:text="#{private.offerdesc}">Descripción</th>
+							<th th:text="#{private.price}">Precio</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -45,26 +45,26 @@
 
 							<td>
 								<div th:if="${offer.sold}">
-									<p>Producto vendido</p>
+									<p th:text="#{private.sold}">Producto vendido</p>
 								</div>
 							</td>
 
-							<td><a th:href="${'/offer/delete/' + offer.id}">Eliminar
+							<td><a th:href="${'/offer/delete/' + offer.id}" th:text="#{private.deleteoffer}">Eliminar
 									oferta</a></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 			<hr>
-			<h3>Productos comprados:</h3>
+			<h3 th:text="#{private.bought}">Productos comprados:</h3>
 			<div class="table table-responsive">
 				<table class="table table-hover" id="purchasedOffers">
 					<thead>
 						<tr>
-							<th>Título</th>
-							<th>Descripción</th>
-							<th>Vendedor</th>
-							<th>Precio</th>
+							<th th:text="#{private.producttitle}">Título</th>
+							<th th:text="#{private.offerdesc}">Descripción</th>
+							<th th:text="#{private.seller}">Vendedor</th>
+							<th th:text="#{private.price}">Precio</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -80,7 +80,9 @@
 		</div>
 		<div class="container" style="text-align: center"
 			sec:authorize="hasRole('ROLE_ADMIN')">
-			<span>Sesión iniciada como administrador:</span> <span
+			<h3 th:text="#{private.admin}">Sesión iniciada como administrador:</h3> 
+			<hr>
+			<span
 				th:text="${completeName}"></span>
 		</div>
 	</div>

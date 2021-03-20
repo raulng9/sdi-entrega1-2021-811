@@ -10,27 +10,28 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-				<li><a href="/home">Área privada</a></li>
+				<li><a href="/home" th:text="#{nav.private}">Área privada</a></li>
 				<li id="offers-menu" class="dropdown nav-item"
 					sec:authorize="hasRole('ROLE_CLIENT')"><a href="/market"
 					class="nav-link">Mercado</a></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
-					class="dropdown-toggle" data-toggle="dropdown" href="#">
-						Gestión de Usuarios <span class="caret"></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li><a href="/user/list">Ver Usuarios</a></li>
-					</ul></li>
-				<li id="offers-menu" class="dropdown nav-item"
-					sec:authorize="hasRole('ROLE_CLIENT')"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> Gestión de ofertas<span
-						class="caret"></span>
+					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
+						th:text="#{nav.usermanage}"></span> <span class="caret"></span>
 
 				</a>
 					<ul class="dropdown-menu">
-						<li class="dropdown-item"><a href="/offer/add">Añadir
-								oferta</a></li>
+						<li><a href="/user/list" th:text="#{nav.userlist}">Ver
+								Usuarios</a></li>
+					</ul></li>
+				<li id="offers-menu" class="dropdown nav-item"
+					sec:authorize="hasRole('ROLE_CLIENT')"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <span
+						th:text="#{nav.offermanage}"></span> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-item"><a href="/offer/add"
+							th:text="#{nav.offeradd}">Añadir oferta</a></li>
 					</ul></li>
 			</ul>
 			</ul>
@@ -41,12 +42,12 @@
 						th:text="#{language.change}"></span> <span class="caret"> </span>
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
-						<li class="dropdown-item"><a id="btnEnglish" value="en"> <img
+						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.en}"></span>
 						</a></li>
-						<li class="dropdown-item"><a id="btnSpanish" value="es"> <img
+						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.es}"></span>
@@ -60,7 +61,8 @@
 					th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
+				<li sec:authorize="isAuthenticated()"><a href="/logout"
+					th:text="#{nav.logout}"> <span
 						class="glyphicon glyphicon-log-out"></span> Log out
 				</a></li>
 			</ul>
