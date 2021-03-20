@@ -53,9 +53,25 @@ public class ProductPurchase {
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
 	}
-	
+
 	public String getBuyerInfo() {
 		return buyer.getFullName();
+	}
+
+	public String getTitle() {
+		return offerBought.getTitle();
+	}
+
+	public double getPrice() {
+		return offerBought.getPrice();
+	}
+
+	public String getOfferEmail() {
+		return offerBought.getUser().getEmail();
+	}
+
+	public String getDescription() {
+		return offerBought.getDescription();
 	}
 
 }

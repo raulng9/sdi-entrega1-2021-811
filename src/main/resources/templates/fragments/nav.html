@@ -1,30 +1,71 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<div class="collapse navbar-collapse" id="myNavbar">
-		<ul class="nav navbar-nav ml-auto">
-			<li sec:authorize="!isAuthenticated()" class="nav-item"><a
-				href="/signup" class="nav-link"> <span>Registrarse</span>
-			</a></li>
-		</ul>
-		<ul class="nav navbar-nav navbar-right">
-			<ul id="languageDropdownMenuButton" class="dropdown-menu">
-					<li>
-						<a id="btnEnglish" value="EN">
-							<img th:src="@{/img/if_uk_flag.png}"
-							style="border:0;float:left;margin-right:15px" /> <span
-							th:text="#{language.en}">Inglés</span>
-						</a>
-					</li>
-					<li>
-						<a id="btnSpanish" value="ES">
-							<img th:src="@{/img/if_spain_flag.png}"
-							style="border:0;float:left;margin-right:15px" /> <span
-							th:text="#{language.es}">Español</span>
-						</a>
-					</li>
-				</ul>
-			<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
-					class="glyphicon glyphicon-log-out"></span> Log out
-			</a></li>
-		</ul>
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<img src="/img/student-48.png" alt="logo" />
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+				<li><a href="/home">Área privada</a></li>
+				<li id="offers-menu" class="dropdown nav-item"
+					sec:authorize="hasRole('ROLE_CLIENT')"><a href="/market"
+					class="nav-link">Mercado</a></li>
+				<li id="users-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_ADMIN')"><a
+					class="dropdown-toggle" data-toggle="dropdown" href="#">
+						Gestión de Usuarios <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/user/list">Ver Usuarios</a></li>
+					</ul></li>
+				<li id="offers-menu" class="dropdown nav-item"
+					sec:authorize="hasRole('ROLE_CLIENT')"><a href="#"
+					class="dropdown-toggle nav-link" data-toggle="dropdown"> <span
+						class="caret">Gestión de ofertas</span>
+
+				</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-item"><a href="/offer/add">Añadir
+								oferta</a></li>
+					</ul></li>
+			</ul>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a id="btnLanguage" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> <span
+						th:text="#{language.change}"></span> <span class="caret"> </span>
+				</a>
+					<ul id="languageDropdownMenuButton" class="dropdown-menu">
+						<li><a id="btnEnglish" value="EN"> <img
+								th:src="@{/img/if_uk_flag.png}"
+								style="border: 0; float: left; margin-right: 15px" /> <span
+								th:text="#{language.en}"></span>
+						</a></li>
+						<li><a id="btnSpanish" value="ES"> <img
+								th:src="@{/img/if_spain_flag.png}"
+								style="border: 0; float: left; margin-right: 15px" /> <span
+								th:text="#{language.es}"></span>
+						</a></li>
+					</ul>
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					th:text="#{signup.message}"> <span
+						class="glyphicon glyphicon-user"></span>
+				</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					th:text="#{login.message}"> <span
+						class="glyphicon glyphicon-log-in"></span>
+				</a></li>
+				<li sec:authorize="isAuthenticated()"><a href="/logout"> <span
+						class="glyphicon glyphicon-log-out"></span> Log out
+				</a></li>
+			</ul>
+
+		</div>
 	</div>
+
 </nav>

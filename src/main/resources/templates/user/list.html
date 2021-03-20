@@ -3,9 +3,8 @@
 <head th:replace="fragments/head"></head>
 <nav th:replace="fragments/nav"></nav>
 <body>
-	<h2>Users in the system</h2>
+	<h2>Usuarios en el sistema</h2>
 	<div class="container white">
-		<hr>
 		<hr>
 		<form class="form-horizontal justify-content-center" method="post"
 			action="/user/delete">
@@ -16,8 +15,8 @@
 						<tr>
 							<th type="checkbox"></th>
 							<th>Email</th>
-							<th>Name</th>
-							<th>Last name</th>
+							<th>Nombre</th>
+							<th>Apellidos</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,8 +31,8 @@
 			</div>
 			<div class="form-group">
 				<div>
-					<button id="btnDel" type="submit" class="btn btn-primary">Delete
-						user(s)</button>
+					<button id="btnDel" type="submit" class="btn btn-primary">Borrar
+						usuario(s)</button>
 				</div>
 			</div>
 		</form>

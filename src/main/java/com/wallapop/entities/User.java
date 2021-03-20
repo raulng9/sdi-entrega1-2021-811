@@ -80,7 +80,7 @@ public class User {
 		return saldo;
 	}
 
-	public void setCredits(double saldo) {
+	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
 

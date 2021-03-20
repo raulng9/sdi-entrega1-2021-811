@@ -58,6 +58,7 @@ public class UserController {
 			return "signup";
 		}
 		userService.addUser(user);
+		//TODO error en GrantAuth aquí
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
 	}

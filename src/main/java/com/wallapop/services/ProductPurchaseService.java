@@ -40,4 +40,21 @@ public class ProductPurchaseService {
 		return prodPurchaseRepository.findPurchasesByUser(buyer);
 	}
 
+	public void buyProduct(User user, ProductOffer offerToBuy) {
+		ProductPurchase purchase = new ProductPurchase(user, offerToBuy);
+		// Antes de efectuar la compra, comprobamos que haya saldo suficiente y que el
+		// usuario no sea también el dueño de la oferta
+		if (user.getSaldo() >= offerToBuy.getPrice() && user.getEmail() != offerToBuy.getUser().getEmail()) {
+			purchase.getOffer().setSold(true);
+			purchase.getBuyer().setSaldo(user.getSaldo() - offerToBuy.getPrice());
+			purchase.getBuyer().getPurchased().add(purchase);
+			addPurchase(purchase);
+			offerToBuy.setPurchase(purchase);
+			user.getPurchased().add(purchase);
+			prodOfferRepository.save(purchase.getOffer());
+			userRepository.save(purchase.getBuyer());
+
+		}
+	}
+
 }

@@ -47,12 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 		http.csrf().disable().authorizeRequests()
 				//Todo el mundo puede acceder a login y signup
-				.antMatchers("/signup", "/login/**").permitAll()
+				.antMatchers("/css/**","/img/**","/script/**","/","/signup","/login/**").permitAll()
+				//Los apartados del mercado solo para clientes
+				.antMatchers("/offer/add").hasAnyAuthority("ROLE_CLIENT")
+				.antMatchers("/market").hasAnyAuthority("ROLE_CLIENT")
 				//Para ver la vista de usuarios hace falta ser admin
 				.antMatchers("/user/list").hasAnyAuthority("ROLE_ADMIN").anyRequest().authenticated()
-				//Tras login se redirecciona a la vista home
+				//Tras login se redirecciona a la vista home (ahora sí)
 				.and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/home")
-				//Logout para todos obviamente
 				.and().logout().permitAll();
 
 	}

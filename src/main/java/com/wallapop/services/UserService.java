@@ -14,15 +14,15 @@ import com.wallapop.repositories.UserRepository;
 
 @Service
 public class UserService {
-	
-	//TODO añadir logger para diversos cambios en usuarios (detalles en pdf)
+
+	// TODO añadir logger para diversos cambios en usuarios (detalles en pdf)
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	private ProductOfferService productOfferService;
 
@@ -41,10 +41,15 @@ public class UserService {
 		return userRepository.findById(id).get();
 	}
 
-	// Añadimos un nuevo usuario al repo, los detalles de rol y crédito en el constructor de la entidad
+	// Añadimos un nuevo usuario al repo, hay que añadir rol y saldo aquí para
+	// evitar el error de GA
 	// Cifrando como en el lab
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		if (user.getEmail() != "admin@mail.com") {
+			user.setRole("ROLE_CLIENT");
+			user.setSaldo(100.0);
+		}
 		userRepository.save(user);
 	}
 

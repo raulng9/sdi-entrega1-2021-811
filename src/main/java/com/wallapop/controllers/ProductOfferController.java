@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.wallapop.entities.ProductOffer;
 import com.wallapop.entities.User;
 import com.wallapop.services.ProductOfferService;
+import com.wallapop.services.ProductPurchaseService;
 import com.wallapop.services.UserService;
 import com.wallapop.validators.AddProductOfferValidator;
 
@@ -31,6 +32,9 @@ public class ProductOfferController {
 
 	@Autowired
 	private ProductOfferService prodOfferService;
+	
+	@Autowired
+	private ProductPurchaseService prodPurchaseService;
 
 	@Autowired
 	private AddProductOfferValidator addProdOfferValidator;
@@ -82,6 +86,28 @@ public class ProductOfferController {
 		model.addAttribute("user", user);
 
 		return "market";
+	}
+	
+	
+	@RequestMapping(value = "/market/buyOffer/{id}", method = RequestMethod.POST)
+	public String buyOffer(Model model, @PathVariable Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User activeUser = userService.getUserByEmail(auth.getName());
+		prodPurchaseService.buyProduct(activeUser, prodOfferService.getOffer(id));
+		return "redirect:/market/update";
+
+	}
+	
+	
+
+	@RequestMapping("/market/update")
+	public String updateMarketAfterBuy(Model model, Pageable pageable) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User activeUser = userService.getUserByEmail(auth.getName());
+		model.addAttribute("offerList", prodOfferService.getNotBoughtOffers(pageable, activeUser));
+		model.addAttribute("user", activeUser);
+		return "market :: tableOffers";
+
 	}
 
 }
