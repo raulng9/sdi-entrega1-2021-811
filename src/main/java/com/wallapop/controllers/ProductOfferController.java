@@ -65,13 +65,13 @@ public class ProductOfferController {
 
 	@RequestMapping(value = "/market", method = RequestMethod.GET)
 	public String showCatalogue(Model model, Pageable pageable,
-			@RequestParam(value = "", required = false) String searchText) {
+			@RequestParam(value = "", required = false) String textToSearch) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.getUserByEmail(auth.getName());
 		Page<ProductOffer> offers = new PageImpl<ProductOffer>(new LinkedList<ProductOffer>());
-		if (searchText != null && !searchText.isEmpty()) {
-			// TODO crear búsqueda por título en el repositorio
+		if (textToSearch != null && !textToSearch.isEmpty()) {
+			offers = prodOfferService.searchOffersByTitle(pageable, textToSearch, user);
 		} else {
 			offers = prodOfferService.getNotBoughtOffers(pageable, user);
 		}

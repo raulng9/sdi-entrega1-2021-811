@@ -1,10 +1,12 @@
 package com.wallapop.services;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -60,10 +62,17 @@ public class ProductOfferService {
 		prodOfferRepository.delete(offerToDelete);
 
 	}
-	
-	public Page<ProductOffer> getNotBoughtOffers(Pageable pageable, User user){
+
+	public Page<ProductOffer> getNotBoughtOffers(Pageable pageable, User user) {
 		Page<ProductOffer> notBoughtOffers = prodOfferRepository.searchNotBoughtOffers(pageable, user);
 		return notBoughtOffers;
+	}
+
+	public Page<ProductOffer> searchOffersByTitle(Pageable pageable, String textToSearch, User user) {
+		Page<ProductOffer> offers = new PageImpl<ProductOffer>(new LinkedList<ProductOffer>());
+		textToSearch = "%" + textToSearch + "%";
+		offers = prodOfferRepository.searchByTitle(pageable, textToSearch, user);
+		return offers;
 	}
 
 }
