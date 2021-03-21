@@ -17,7 +17,7 @@ public class PO_Properties {
 	static int SPANISH = 0;
 	static int ENGLISH = 1;	
 	static Locale[] idioms = new Locale[] {new Locale("ES"), new Locale("EN")};
-	//static Properties p = new Properties();
+
 	public PO_Properties(String Path) 
 	{
 		PO_Properties.Path = Path;

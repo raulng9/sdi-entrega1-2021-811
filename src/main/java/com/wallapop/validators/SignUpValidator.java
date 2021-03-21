@@ -26,7 +26,6 @@ public class SignUpValidator implements Validator{
 
 		User user = (User) target;
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
-		// Check básico del email por longitud y @ (posible extensión con longitud del dominio)
 		if (user.getEmail().length() < 8 || !user.getEmail().contains("@") || !user.getEmail().contains(".")) {
 			errors.rejectValue("email", "Error.signup.email.format");
 		}

@@ -1,10 +1,7 @@
 package com.wallapoptest.tests;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.runners.MethodSorters;
 
@@ -21,8 +18,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.wallapop.MyWallapopSpringApplication;
-import com.wallapop.entities.ProductOffer;
-import com.wallapop.entities.User;
 import com.wallapop.services.InsertSampleDataService;
 import com.wallapop.services.ProductOfferService;
 import com.wallapop.services.ProductPurchaseService;
@@ -68,7 +63,6 @@ public class MyWallapopTests {
 
 	@Before
 	public void setUp() throws ParseException {
-		// Primero tenemos que limpiar la bd por si hubo cambios en el test anterior
 		insertSampleDataService.restartDBData();
 		insertSampleDataService.init();
 		driver.navigate().to(URL);
@@ -208,7 +202,7 @@ public class MyWallapopTests {
 	}
 
 	@Test
-	public void PR14() {
+	public void PR14() throws Exception{
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "admin@mail.com", "admin");
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "users-menu", PO_View.getTimeout());
@@ -224,9 +218,8 @@ public class MyWallapopTests {
 		assertTrue(userService.getUserByEmail("testmail6@mail.com") == null);
 	}
 
-	// En este caso borramos a los 3 primeros
 	@Test
-	public void PR15() {
+	public void PR15() throws Exception{
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "admin@mail.com", "admin");
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "users-menu", PO_View.getTimeout());
@@ -239,7 +232,6 @@ public class MyWallapopTests {
 		checks.get(2).click();
 		driver.findElement(By.id("btnDel")).click();
 		assertTrue(driver.findElements(By.xpath("//table[@id='usersTable']/tbody/tr")).size() == 4);
-		// TODO try catch para los nulls
 		assertTrue(userService.getUserByEmail("testmail@mail.com") == null);
 		assertTrue(userService.getUserByEmail("testmail2@email.com") == null);
 		assertTrue(userService.getUserByEmail("testmail3@email.com") == null);
@@ -250,7 +242,6 @@ public class MyWallapopTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "testmail@mail.com", "123456");
 		assertTrue(driver.findElements(By.xpath("//table[@id='createdOffers']/tbody/tr")).size() == 3);
-
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "offers-menu", PO_View.getTimeout());
 		elementos.get(0).click();
 		PO_HomeView.clickOption(driver, "/offer/add", "class", "btn btn-primary");
@@ -405,17 +396,16 @@ public class MyWallapopTests {
 	@Test
 	public void PR27() {
 
-		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-				PO_Properties.getENGLISH());
-
-		// Página principal
+		//PRUEBAS DE CAMBIO DE IDIOMA
+		
+		// En la página principal
 		driver.navigate().to(URL);
 		PO_NavView.changeIdiom(driver, "btnEnglish");
 		PO_HomeView.checkWelcome(driver, PO_Properties.getENGLISH());
 		PO_NavView.changeIdiom(driver, "btnSpanish");
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 
-		// Opciones de usuario
+		// En el panel de zona privada de opciones de usuario
 		driver.navigate().to("http://localhost:8099/login");
 		PO_LoginView.fillForm(driver, "testmail@mail.com", "123456");
 		PO_NavView.changeIdiom(driver, "btnEnglish");
@@ -423,7 +413,7 @@ public class MyWallapopTests {
 		PO_NavView.changeIdiom(driver, "btnSpanish");
 		PO_View.checkElement(driver, "text", "Área privada");
 
-		// Listado de usuarios
+		// En la vista de listado de usuarios logueado como administrador
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "admin@mail.com", "admin");
@@ -436,8 +426,8 @@ public class MyWallapopTests {
 		PO_NavView.changeIdiom(driver, "btnSpanish");
 		PO_View.checkElement(driver, "text", "Usuarios en el sistema");
 		PO_View.checkElement(driver, "text", "Borrar usuarios seleccionados");
-		
-		// Alta de oferta
+
+		// En la vista de creación de nueva oferta
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "testmail@mail.com", "123456");
@@ -458,13 +448,13 @@ public class MyWallapopTests {
 
 	@Test
 	public void PR28() {
-		driver.navigate().to("http://localhost:8099/user/list");
+		driver.navigate().to(URL + "/user/list");
 		PO_View.checkElement(driver, "text", "Iniciar sesión");
 	}
 
 	@Test
 	public void PR29() {
-		driver.navigate().to("http://localhost:8099/home");
+		driver.navigate().to(URL + "/home");
 		PO_View.checkElement(driver, "text", "Iniciar sesión");
 	}
 
@@ -472,7 +462,7 @@ public class MyWallapopTests {
 	public void PR30() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "testmail@mail.com", "123456");
-		driver.navigate().to("http://localhost:8099/user/list");
+		driver.navigate().to(URL + "/user/list");
 		PO_View.checkElement(driver, "text", "Forbidden");
 	}
 

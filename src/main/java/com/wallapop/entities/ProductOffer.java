@@ -3,7 +3,6 @@ package com.wallapop.entities;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,13 +25,11 @@ public class ProductOffer {
 	private double price;
 	public boolean isSold;
 
-	// Cada oferta está asignada a un único usuario, pero cada usuario puede ser
-	// dueño de varias ofertas
+
 	@ManyToOne()
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	// Cada oferta tiene una única compra asociada y viceversa
 	@OneToOne
 	@JoinColumn(name = "purchase_id")
 	private ProductPurchase purchase;

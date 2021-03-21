@@ -231,6 +231,8 @@ public class InsertSampleDataService {
 
 	}
 
+	// Método utilizado en testing para limpiar la BD entre los distintos tests y
+	// que así no se afecten entre ellos
 	public void restartDBData() {
 		userRepository.deleteAll();
 		prodOfferRepository.deleteAll();

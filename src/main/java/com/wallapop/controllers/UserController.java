@@ -43,7 +43,6 @@ public class UserController {
 	private static final Logger logger = LogManager.getLogger(UserController.class);
 
 
-	// TODO hará falta un validador para postear nuevas ofertas de producto
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Principal principal) {
@@ -52,7 +51,6 @@ public class UserController {
 		return "user/list";
 	}
 
-	// Creación de un nuevo usuario si la validación es correcta
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result) {
 		signUpValidator.validate(user, result);

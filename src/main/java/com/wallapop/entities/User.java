@@ -21,12 +21,9 @@ public class User {
 	@Transient
 	private String passwordConfirm;
 
-	// Cada usuario puede tener varias ofertas pero no viceversa
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<ProductOffer> offers = new HashSet<ProductOffer>();
 
-	// Cada compra pertenece a un único usuario, pero un usuario puede realizar más
-	// de una compra
 	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
 	private Set<ProductPurchase> purchased = new HashSet<ProductPurchase>();
 
