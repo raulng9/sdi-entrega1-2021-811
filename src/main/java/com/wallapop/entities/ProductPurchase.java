@@ -69,6 +69,10 @@ public class ProductPurchase {
 	public String getOfferEmail() {
 		return offerBought.getUser().getEmail();
 	}
+	
+	public String getSellerInfo() {
+		return offerBought.getUser().getFullName();
+	}
 
 	public String getDescription() {
 		return offerBought.getDescription();

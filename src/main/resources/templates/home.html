@@ -71,7 +71,7 @@
 						<tr th:each="purchase : ${purchasedList}">
 							<td th:text="${purchase.getTitle()}"></td>
 							<td th:text="${purchase.getDescription()}"></td>
-							<td th:text="${purchase.getBuyerInfo()}"></td>
+							<td th:text="${purchase.getSellerInfo()}"></td>
 							<td th:text="${purchase.getPrice()}"></td>
 						</tr>
 					</tbody>

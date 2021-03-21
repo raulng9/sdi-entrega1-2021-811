@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ public class UserService {
 
 	@Autowired
 	private ProductOfferService prodOfferService;
+
+	private static final Logger logger = LogManager.getLogger(UserService.class);
 
 	@PostConstruct
 	public void init() {
@@ -52,6 +56,7 @@ public class UserService {
 			user.setSaldo(100.0);
 		}
 		userRepository.save(user);
+		logger.debug(String.format("A new user has registered:  %s", user.getEmail()));
 	}
 
 	// Equivalente a buscar por DNI, es la otra clave aparte del id para identificar
@@ -63,8 +68,8 @@ public class UserService {
 	public void deleteUser(String[] userIds) {
 		for (String id : userIds) {
 			User userToDelete = getUser(Long.parseLong(id));
-			//No podemos permitir el borrado de administradores
-			if(userToDelete.getRole().equals("ROLE_ADMIN")) {
+			// No podemos permitir el borrado de administradores
+			if (userToDelete.getRole().equals("ROLE_ADMIN")) {
 				continue;
 			}
 			System.out.println(userToDelete.getRole());
@@ -80,11 +85,7 @@ public class UserService {
 				offerToDelete.setPurchase(null);
 			}
 			userRepository.delete(userToDelete);
+			logger.debug(String.format("User %s has been deleted from the system", userToDelete.getEmail()));
 		}
-
-		// TODO incluir borrado de todas las ofertas asociadas al usuario
-
 	}
-
-	// Editar usuario no hace falta incluirlo en este caso
 }

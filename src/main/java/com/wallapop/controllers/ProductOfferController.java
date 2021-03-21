@@ -2,6 +2,8 @@ package com.wallapop.controllers;
 
 import java.util.LinkedList;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,25 +35,26 @@ public class ProductOfferController {
 
 	@Autowired
 	private ProductOfferService prodOfferService;
-	
+
 	@Autowired
 	private ProductPurchaseService prodPurchaseService;
 
 	@Autowired
 	private AddProductOfferValidator addProdOfferValidator;
 
+	private static final Logger logger = LogManager.getLogger(ProductOfferController.class);
+
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(Model model, @Validated ProductOffer prodOffer, BindingResult result,
+	public String setOffer(Model model, @ModelAttribute("offer") ProductOffer prodOffer, BindingResult result,
 			@RequestParam(value = "id", required = false) String id) {
 		addProdOfferValidator.validate(prodOffer, result);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.getUserByEmail(auth.getName());
 		if (result.hasErrors()) {
 			return "productoffer/add";
 		}
-		// TODO método para añadir oferta a la repo y enlazar con el usuario dueño
-		// Después de añadir la oferta volver a la vista principal
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.getUserByEmail(auth.getName());
 		prodOfferService.addOffer(prodOffer, user);
+		logger.debug(String.format("The user with email %s has added a new offer to the market", user.getEmail()));
 		return "redirect:/home";
 	}
 
@@ -63,6 +67,8 @@ public class ProductOfferController {
 
 	@RequestMapping("/offer/delete/{id}")
 	public String deleteMark(@PathVariable Long id) {
+		logger.debug(String.format("The user %s has deleted one of his offers from the market",
+				prodOfferService.getOffer(id).getUser().getEmail()));
 		prodOfferService.deleteOffer(id);
 		return "redirect:/home";
 	}
@@ -87,8 +93,7 @@ public class ProductOfferController {
 
 		return "market";
 	}
-	
-	
+
 	@RequestMapping(value = "/market/buyOffer/{id}", method = RequestMethod.POST)
 	public String buyOffer(Model model, @PathVariable Long id) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -97,7 +102,7 @@ public class ProductOfferController {
 		return "redirect:/market/update";
 
 	}
-	
+
 	@RequestMapping("/market/update")
 	public String updateMarketAfterBuy(Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -106,8 +111,7 @@ public class ProductOfferController {
 		model.addAttribute("user", activeUser);
 		return "market :: tableOffers";
 	}
-	
-	
+
 	@RequestMapping("/market/updateuser")
 	public String updateUserInfoAfterBuy(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,6 +119,5 @@ public class ProductOfferController {
 		model.addAttribute("user", activeUser);
 		return "market :: userData";
 	}
-
 
 }

@@ -31,7 +31,6 @@ public class ProductOfferService {
 		user.getOffers().add(offerToAdd);
 		prodOfferRepository.save(offerToAdd);
 		userRepository.save(user);
-
 	}
 
 	// El método básico

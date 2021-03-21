@@ -2,6 +2,8 @@ package com.wallapop.controllers;
 
 import java.security.Principal;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wallapop.entities.User;
-import com.wallapop.services.ConversationService;
 import com.wallapop.services.ProductOfferService;
 import com.wallapop.services.ProductPurchaseService;
 import com.wallapop.services.SecurityService;
@@ -35,11 +36,12 @@ public class UserController {
 	@Autowired
 	private ProductPurchaseService prodPurchaseService;
 
-	@Autowired
-	private ConversationService conversationService;
 
 	@Autowired
 	private SignUpValidator signUpValidator;
+	
+	private static final Logger logger = LogManager.getLogger(UserController.class);
+
 
 	// TODO hará falta un validador para postear nuevas ofertas de producto
 
@@ -59,6 +61,7 @@ public class UserController {
 		}
 		userService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		logger.debug(String.format("Registration and login as user %s done with success", user.getEmail()));
 		return "redirect:home";
 	}
 
@@ -75,6 +78,7 @@ public class UserController {
 
 	@RequestMapping("/user/delete")
 	public String delete(@RequestParam("id") String[] ids) {
+		System.out.println(ids);
 		userService.deleteUser(ids);
 		return "redirect:/user/list";
 	}
