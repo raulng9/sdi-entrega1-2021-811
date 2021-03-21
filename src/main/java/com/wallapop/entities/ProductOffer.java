@@ -24,7 +24,7 @@ public class ProductOffer {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date date;
 	private double price;
-	private boolean isSold;
+	public boolean isSold;
 
 	// Cada oferta está asignada a un único usuario, pero cada usuario puede ser
 	// dueño de varias ofertas

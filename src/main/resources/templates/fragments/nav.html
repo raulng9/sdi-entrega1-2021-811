@@ -11,14 +11,13 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/home" th:text="#{nav.private}">Área privada</a></li>
-				<li id="offers-menu" class="dropdown nav-item"
+				<li id="market-menu" class="dropdown nav-item"
 					sec:authorize="hasRole('ROLE_CLIENT')"><a href="/market"
 					class="nav-link" th:text="#{nav.market}">Mercado</a></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a
 					class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 						th:text="#{nav.usermanage}"></span> <span class="caret"></span>
-
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/user/list" th:text="#{nav.userlist}">Ver
@@ -30,7 +29,7 @@
 						th:text="#{nav.offermanage}"></span> <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li class="dropdown-item"><a href="/offer/add"
+						<li class="dropdown-item"><a href="/offer/add" id="createOfferMenu"
 							th:text="#{nav.offeradd}">Añadir oferta</a></li>
 					</ul></li>
 			</ul>

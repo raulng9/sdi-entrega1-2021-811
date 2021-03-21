@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.wallapop.entities.ProductOffer;
+import com.wallapop.entities.ProductPurchase;
 import com.wallapop.entities.User;
 import com.wallapop.repositories.UserRepository;
 
@@ -74,16 +75,22 @@ public class UserService {
 			for (ProductOffer offer : userToDelete.getOffers()) {
 				ProductOffer offerToDelete = prodOfferService.getOffer(offer.getId());
 				if (offerToDelete.getPurchase() != null) {
-
 					offerToDelete.getPurchase().setOffer(null);
 					offerToDelete.getUser().getPurchased().remove(offerToDelete.getPurchase());
-
 				}
 				offerToDelete.setUser(null);
 				offerToDelete.setPurchase(null);
 			}
-			userRepository.delete(userToDelete);
+			userToDelete.setOffers(null);
+			if (userToDelete.getPurchased() != null) {
+				for (ProductPurchase purchase : userToDelete.getPurchased()) {
+					purchase.setBuyer(null);
+					purchase.setOffer(null);
+				}
+			}
+			userToDelete.setPurchased(null);
 			logger.debug(String.format("User %s has been deleted from the system", userToDelete.getEmail()));
+			userRepository.delete(userToDelete);
 		}
 	}
 }

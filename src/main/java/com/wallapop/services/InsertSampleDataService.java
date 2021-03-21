@@ -108,6 +108,8 @@ public class InsertSampleDataService {
 				new Date(System.currentTimeMillis()), 320.00, u6));
 		ProductOffer offer18 = (new ProductOffer("Altavoz inalámbrico Sony", "Sin casi uso",
 				new Date(System.currentTimeMillis()), 89.99, u6));
+		ProductOffer offer19 = (new ProductOffer("Oferta para dejar a 0", "El precio justo",
+				new Date(System.currentTimeMillis()), 42.0, u6));
 
 		Set<ProductOffer> offersOfUser1 = new HashSet<ProductOffer>() {
 
@@ -177,6 +179,7 @@ public class InsertSampleDataService {
 				add(offer16);
 				add(offer17);
 				add(offer18);
+				add(offer19);
 
 			}
 		};
@@ -210,6 +213,7 @@ public class InsertSampleDataService {
 		prodOfferService.addOffer(offer16, u6);
 		prodOfferService.addOffer(offer17, u6);
 		prodOfferService.addOffer(offer18, u6);
+		prodOfferService.addOffer(offer19, u6);
 
 		// AÑADIDO DE COMPRAS ENTRE USUARIOS (al menos 2 por usuario)
 		prodPurchaseService.buyProduct(u1, offer4);
@@ -232,9 +236,5 @@ public class InsertSampleDataService {
 		prodOfferRepository.deleteAll();
 		prodPurchaseRepository.deleteAll();
 	}
-
-	// TODO si da tiempo mirar constructores de Date para poder incluir parsing de
-	// fechas en
-	// string
 
 }
