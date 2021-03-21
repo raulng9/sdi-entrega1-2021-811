@@ -17,9 +17,8 @@ public class User {
 	private String lastName;
 	private String role;
 	private double saldo;
-
 	private String password;
-	@Transient // No almacenada en la tabla
+	@Transient
 	private String passwordConfirm;
 
 	// Cada usuario puede tener varias ofertas pero no viceversa
@@ -111,7 +110,7 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
+
 	public Set<ProductOffer> getOffers() {
 		return this.offers;
 	}
@@ -119,7 +118,7 @@ public class User {
 	public void setOffers(Set<ProductOffer> offers) {
 		this.offers = offers;
 	}
-	
+
 	public Set<ProductPurchase> getPurchased() {
 		return purchased;
 	}
@@ -127,6 +126,5 @@ public class User {
 	public void setPurchased(Set<ProductPurchase> purchased) {
 		this.purchased = purchased;
 	}
-
 
 }

@@ -45,7 +45,6 @@ public class ProductPurchaseService {
 			user.getPurchased().add(purchase);
 			prodOfferRepository.save(purchase.getOffer());
 			userRepository.save(purchase.getBuyer());
-
 		}
 	}
 
