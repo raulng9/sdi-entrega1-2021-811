@@ -18,8 +18,6 @@ import com.wallapop.repositories.UserRepository;
 @Service
 public class UserService {
 
-	// TODO añadir logger para diversos cambios en usuarios (detalles en pdf)
-
 	@Autowired
 	private UserRepository userRepository;
 

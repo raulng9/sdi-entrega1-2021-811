@@ -99,6 +99,8 @@ public class ProductOfferController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User activeUser = userService.getUserByEmail(auth.getName());
 		prodPurchaseService.buyProduct(activeUser, prodOfferService.getOffer(id));
+		logger.debug(String.format("The user with email %s has bought the offer with id %s", activeUser.getEmail(),
+				String.valueOf(id)));
 		return "redirect:/market/update";
 
 	}

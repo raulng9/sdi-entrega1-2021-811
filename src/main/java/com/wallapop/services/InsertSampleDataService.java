@@ -1,5 +1,6 @@
 package com.wallapop.services;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,10 +38,9 @@ public class InsertSampleDataService {
 	private ProductPurchaseRepository prodPurchaseRepository;
 
 	@PostConstruct
-	public void init() {
+	public void init() throws ParseException {
 
-		// USUARIOS
-
+		// CREACIÓN DE USUARIOS
 		User u1 = new User("testmail@mail.com", "Raúl", "Test1 Test1");
 		u1.setRole("ROLE_CLIENT");
 		u1.setPassword("123456");
@@ -69,7 +69,7 @@ public class InsertSampleDataService {
 		adminUser.setRole("ROLE_ADMIN");
 		adminUser.setPassword("admin");
 
-		// OFERTAS
+		// CREACIÓN DE OFERTAS
 		ProductOffer offer1 = new ProductOffer("Funda iPhone", "Transparente con esquinas reforzadas",
 				new Date(System.currentTimeMillis()), 8.0, u1);
 		ProductOffer offer2 = new ProductOffer("Camiseta fútbol", "Andés C.F. Temporada 20-21",
@@ -110,9 +110,7 @@ public class InsertSampleDataService {
 				new Date(System.currentTimeMillis()), 89.99, u6));
 
 		Set<ProductOffer> offersOfUser1 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
+
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -125,9 +123,6 @@ public class InsertSampleDataService {
 		u1.setOffers(offersOfUser1);
 
 		Set<ProductOffer> offersOfUser2 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -140,9 +135,6 @@ public class InsertSampleDataService {
 		u2.setOffers(offersOfUser2);
 
 		Set<ProductOffer> offersOfUser3 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -155,9 +147,6 @@ public class InsertSampleDataService {
 		u3.setOffers(offersOfUser3);
 
 		Set<ProductOffer> offersOfUser4 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -170,9 +159,6 @@ public class InsertSampleDataService {
 		u4.setOffers(offersOfUser4);
 
 		Set<ProductOffer> offersOfUser5 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -185,9 +171,6 @@ public class InsertSampleDataService {
 		u5.setOffers(offersOfUser5);
 
 		Set<ProductOffer> offersOfUser6 = new HashSet<ProductOffer>() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			{
 
@@ -209,7 +192,6 @@ public class InsertSampleDataService {
 		userService.addUser(adminUser);
 
 		// AÑADIDO DE OFERTAS
-
 		prodOfferService.addOffer(offer1, u1);
 		prodOfferService.addOffer(offer2, u1);
 		prodOfferService.addOffer(offer3, u1);
@@ -229,8 +211,7 @@ public class InsertSampleDataService {
 		prodOfferService.addOffer(offer17, u6);
 		prodOfferService.addOffer(offer18, u6);
 
-		// AÑADIDO DE COMPRAS MÍNIMAS EFECTUADAS
-
+		// AÑADIDO DE COMPRAS ENTRE USUARIOS (al menos 2 por usuario)
 		prodPurchaseService.buyProduct(u1, offer4);
 		prodPurchaseService.buyProduct(u1, offer6);
 		prodPurchaseService.buyProduct(u2, offer1);
@@ -243,6 +224,7 @@ public class InsertSampleDataService {
 		prodPurchaseService.buyProduct(u5, offer18);
 		prodPurchaseService.buyProduct(u6, offer11);
 		prodPurchaseService.buyProduct(u6, offer15);
+
 	}
 
 	public void restartDBData() {
@@ -251,7 +233,8 @@ public class InsertSampleDataService {
 		prodPurchaseRepository.deleteAll();
 	}
 
-	// TODO mirar constructores de Date para poder incluir parsing de fechas en
+	// TODO si da tiempo mirar constructores de Date para poder incluir parsing de
+	// fechas en
 	// string
 
 }

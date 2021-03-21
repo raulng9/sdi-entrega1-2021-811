@@ -78,7 +78,6 @@ public class UserController {
 
 	@RequestMapping("/user/delete")
 	public String delete(@RequestParam("id") String[] ids) {
-		System.out.println(ids);
 		userService.deleteUser(ids);
 		return "redirect:/user/list";
 	}
